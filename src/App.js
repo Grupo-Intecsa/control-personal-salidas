@@ -1,11 +1,23 @@
 import './App.scss';
+import { Component } from 'react';
+import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import Layout from 'containers/Layout';
 
-function App() {
-  return (
-    <div>
-      <h1>Control de Salidas</h1>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route 
+            path="/" 
+            name="Home" 
+            component={(props) => <Layout {...props} />} 
+          />
+        </Switch>
+      </Router>
+    )
+  }
 }
 
 export default App;
