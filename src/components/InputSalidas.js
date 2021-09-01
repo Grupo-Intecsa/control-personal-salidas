@@ -19,7 +19,7 @@ const InputSalidas = () => {
   const onSubmit = (data) => {
     const selectEployee = Array.isArray(listEmployees) && 
       listEmployees.filter(employee => employee.nombre === data.employee)
-      
+
       console.log({ selectEployee, data })
   }
 
@@ -40,6 +40,7 @@ const InputSalidas = () => {
     if(state.matches('success')){
       setDeptoSelect(codigoSelect(codigoWatch))
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codigoWatch])
 
   useEffect(() => {
