@@ -1,2 +1,11 @@
+@font-face {
+  font-family: itafont;
+  src: url('./assets/fonts/itafont.ttf');
+}
+
+
 @import './styles/index.scss';
 @import './styles/control__personal.scss';
+@import './styles/_variables';
+@import './styles/_containers';
+@import './styles/_icon';
