@@ -101,5 +101,52 @@
       opacity: 0.60;
       margin: 3px transparent;
     }
+
+    &:disabled{
+      background-color: yellow;
+    }
+  }
+}
+
+
+#chismoso__container{
+  margin-top: 80px;
+  
+
+  table{
+    width: 100vh;
+    background-color: white;
+    
+
+    thead, tbody{
+      width: 100%;
+      padding: 0.25rem;
+    }
+
+    thead{
+      background-color: cornflowerblue;
+      color: white;
+      
+    }
+
+    th{
+      border-radius: 2px;
+    }
+
+    tr:nth-child(2n + 1 ){
+      background-color: #cfd9df;
+    }
+
+    th,
+    td{
+      font-size: medium;
+      padding: 0.25rem;
+    }
+
+    button{
+      background-color: white;
+      width: 140px;
+      height: 40px;
+    }
   }
 }

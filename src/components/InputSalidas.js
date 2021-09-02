@@ -4,24 +4,44 @@ import { useForm } from "react-hook-form"
 import RHmachine from "context/RHmachine"
 import { useMachine } from '@xstate/react'
 
+import Chismoso from "./Chismoso"
+
 
 const InputSalidas = () => {
 
   const [state, send] = useMachine(RHmachine)
 
-  const { register, handleSubmit, watch } = useForm()
+  const { register, handleSubmit, watch, reset } = useForm()
   const [deptoSelect, setDeptoSelect] = useState(undefined)
   const [inputEmployee, setInputEmployee] = useState(false)
 
-  const { listEmployees, listDeptos, errors } = state.context
-  const codigoWatch = watch("codigo", { listEmployees, listDeptos, errors })
+  const { listEmployees, listDeptos } = state.context
+  const codigoWatch = watch("codigo")
+  const employee = watch('employee')
 
   const onSubmit = (data) => {
-    const selectEployee = Array.isArray(listEmployees) && 
-      listEmployees.filter(employee => employee.nombre === data.employee)
 
-      console.log({ selectEployee, data })
+      const payload = {
+        empleado: data.codigo,
+        destino: data.destino,
+        nameEmployee: data.employee
+      }
+
+      send('POST_SALIDA_EMPLOYEE', { data: payload })
+      
   }
+
+  useEffect(() => {
+    send('GET_ALL_ACTIVE_REG')
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (state.matches('newSalida')){
+      reset()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state])
 
   useEffect(() => {
     send('GET_INFO_DATA')
@@ -52,6 +72,7 @@ const InputSalidas = () => {
   }, [deptoSelect])
 
   return (
+  <>
     <div className="salidas__container__input">
       <div>
       </div>
@@ -94,10 +115,25 @@ const InputSalidas = () => {
           </div>          
   
         }
+        {
+          employee && 
+          <input 
+            placeholder="Añadir Destino" 
+            {...register('destino')}
+            />
+        }
         <div style={{ marginBottom: '20px' }}></div>
         <button type="submit">Marcar Salida</button>
       </form>
     </div>
+    <div style={{ marginBottom: '20px' }}></div>
+    <Chismoso 
+      state={state}
+      send={send}
+      chismosData={state.context.chismoso}
+    />
+  </>
+  
   )
 }
 

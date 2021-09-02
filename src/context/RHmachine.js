@@ -19,13 +19,33 @@ const getEmployees = () => {
   return query
 }
 
+const postSalidaEmployee = (ctx, event) => {
+  const mutation = FetchFunction({
+    url: '/rrhh/salidasactive',
+    metohd: 'post',
+    data: event.data
+   })
+
+  return mutation 
+}
+
+const getAllActiveReg = () => {
+  const query = FetchFunction({
+    url: '/rrhh/registrosget',
+    metohd: 'get'
+  })
+
+  return query
+}
+
 const RHmachine = createMachine({
   id: 'auth',
   initial: "init",
   context: {
     listEmployees: [],
     listDeptos: [],
-    errors: []
+    errors: [],
+    chismoso: []
   },
   states: {
     init: {},
@@ -50,7 +70,7 @@ const RHmachine = createMachine({
       invoke: {
         src: getDeptos,
         onDone: {
-          target: 'success',
+          target: 'getAllActiveReg',
           actions: assign({
             listDeptos: (ctx, evt) => evt.data
           })
@@ -63,11 +83,51 @@ const RHmachine = createMachine({
         }
       }
     },
+    postSalidaEmployee: {
+      invoke: {
+        src: postSalidaEmployee,
+        onDone: {
+          target: 'newSalida',
+        },
+        onError: {
+          target: 'error',
+          actions: assign({
+            errors: (evt) =>  evt.data
+          })
+        }
+      }
+    },
+    getAllActiveReg: {
+      invoke: {
+        src: getAllActiveReg,
+        onDone: {
+          target: 'success',
+          actions: assign({
+            chismoso: (ctx, event) => event.data
+          })
+        },
+        onError: {
+          target: 'error',
+          actions: assign({
+            errors: (evt) =>  evt.data
+          })
+        }
+      }
+    },
     success: {},
-    error: {}
+    error: {},
+    newSalida: {
+      after: {
+        3000: { target: 'success' }
+      }
+    },
+
+
   },
   on: {
     GET_INFO_DATA: 'getEmployees',
+    POST_SALIDA_EMPLOYEE: 'postSalidaEmployee',
+    GET_ALL_ACTIVE_REG: 'getAllActiveReg'
   }
 })
 
