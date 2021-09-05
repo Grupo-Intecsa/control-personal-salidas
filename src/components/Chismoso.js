@@ -3,6 +3,10 @@ import { useEffect } from "react"
 
 const Chismoso = ({ state, send, chismosData }) => {
 
+  const handleRemoveSalida = (employee) => {
+    console.log(employee)
+  }
+
   useEffect(() => {
     if (state?.matches('newSalida')){
       send('GET_ALL_ACTIVE_REG')
@@ -12,13 +16,13 @@ const Chismoso = ({ state, send, chismosData }) => {
   return (
     <div id="chismoso__container">
       <table>
-          <thead>
+        <tbody>
+          <tr>
             <th>Colaborador</th>
             <th>Destino</th>
             <th>Salida</th>
             <th>Acciones</th>
-          </thead>
-          <tbody>
+          </tr>
           { 
             Object
               .values(chismosData)
@@ -28,7 +32,7 @@ const Chismoso = ({ state, send, chismosData }) => {
                     <td>{employee.nameEmployee}</td>
                     <td>{employee.destino}</td>
                     <td>{employee.createdAt}</td>
-                    <td><button>Remover</button></td>
+                    <td><button onClick={() => handleRemoveSalida(employee)}>Remover</button></td>
                   </tr>
                 )
               })

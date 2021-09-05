@@ -109,7 +109,7 @@ const InputSalidas = () => {
             >
             {
               Object.values(listEmployees)
-                .map(employee => <option>{employee.nombre}</option>)
+                .map(employee => <option key={employee._id}>{employee.nombre}</option>)
             }
           </datalist>
           </div>          
