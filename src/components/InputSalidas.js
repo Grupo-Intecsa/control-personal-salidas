@@ -48,7 +48,7 @@ const InputSalidas = () => {
  
   const departametSelected = useMemo(() => {
 
-    const card =  listDeptos.length > 0 && 
+    const card = state.matches('success') && 
     Object
       .values(listDeptos)
       .filter(card => card._id === codigoWatch )
@@ -88,6 +88,7 @@ const InputSalidas = () => {
             id="employees"
             >
             {
+              state.matches('success') &&
               Object.values(listEmployees)
                 .map(employee => <option key={employee._id}>{employee.nombre}</option>)
             }

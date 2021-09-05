@@ -32,7 +32,7 @@ const Chismoso = ({ state, send, chismosData }) => {
               .values(chismosData)
               .map(employee => {
                 return (
-                  <tr>
+                  <tr key={employee._id}>
                     <td>{employee.nameEmployee}</td>
                     <td>{employee.destino}</td>
                     <td>{<DateHook date={employee.createdAt} />}</td>
