@@ -1,11 +1,10 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import { useForm } from "react-hook-form"
 
 import RHmachine from "context/RHmachine"
 import { useMachine } from '@xstate/react'
 
 import Chismoso from "./Chismoso"
-import { useMemo } from "react/cjs/react.development"
 
 
 const InputSalidas = () => {
