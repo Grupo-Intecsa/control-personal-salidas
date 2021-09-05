@@ -38,6 +38,25 @@ const getAllActiveReg = () => {
   return query
 }
 
+const patchRemoveReg = (ctx, event) => {
+
+  const id = event.data._id
+
+  const payload = {
+    dateFinish: new Date(),
+    isActive: false,
+  }
+
+  const query = FetchFunction({
+    url: `/rrhh/removeregistro/${id}`,
+    metohd: 'patch',
+    data: payload
+
+  })
+
+  return query
+}
+
 const RHmachine = createMachine({
   id: 'auth',
   initial: "init",
@@ -114,6 +133,20 @@ const RHmachine = createMachine({
         }
       }
     },
+    patchRemoveReg: {
+      invoke: {
+        src: patchRemoveReg,
+        onDone: {
+          target: 'newSalida',
+        },
+        onError: {
+          target: 'error',
+          actions: assign({
+            errors: (evt) =>  evt.data
+          })
+        }
+      }
+    },
     success: {},
     error: {},
     newSalida: {
@@ -127,7 +160,8 @@ const RHmachine = createMachine({
   on: {
     GET_INFO_DATA: 'getEmployees',
     POST_SALIDA_EMPLOYEE: 'postSalidaEmployee',
-    GET_ALL_ACTIVE_REG: 'getAllActiveReg'
+    GET_ALL_ACTIVE_REG: 'getAllActiveReg',
+    REMOVE_SALIDA: 'patchRemoveReg'
   }
 })
 

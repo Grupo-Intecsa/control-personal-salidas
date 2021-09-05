@@ -6,7 +6,7 @@ const ControlSalidas = () => {
     <div className="control__salidas__view">
       <h1>Control de Salidas</h1>
       <section>
-        <button disabled={true}>Buscar Registro</button>
+        <a href="/">Buscar Registro</a>
       </section>
       
       <section>

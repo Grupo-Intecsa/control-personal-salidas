@@ -1,19 +1,18 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 
 import RHmachine from "context/RHmachine"
 import { useMachine } from '@xstate/react'
 
 import Chismoso from "./Chismoso"
+import { useMemo } from "react/cjs/react.development"
 
 
 const InputSalidas = () => {
 
   const [state, send] = useMachine(RHmachine)
-
   const { register, handleSubmit, watch, reset } = useForm()
-  const [deptoSelect, setDeptoSelect] = useState(undefined)
-  const [inputEmployee, setInputEmployee] = useState(false)
+  
 
   const { listEmployees, listDeptos } = state.context
   const codigoWatch = watch("codigo")
@@ -28,7 +27,7 @@ const InputSalidas = () => {
       }
 
       send('POST_SALIDA_EMPLOYEE', { data: payload })
-      
+      reset()
   }
 
   useEffect(() => {
@@ -46,30 +45,14 @@ const InputSalidas = () => {
   useEffect(() => {
     send('GET_INFO_DATA')
   }, [send])
-
-  const codigoSelect = (codigo) => {
-    const select = Object
+ 
+  const departametSelected = useMemo(() => {
+    const card = Object
       .values(listDeptos)
-      .filter(depto => depto._id === codigo)
-      .map(depto => depto.title)
-
-      return select
-  }
-
-  useEffect(() => {
-    if(state.matches('success')){
-      setDeptoSelect(codigoSelect(codigoWatch))
-    }
+      .filter(card => card._id === codigoWatch )
+    return  Array.isArray(card) && card[0]?.title
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [codigoWatch])
-
-  useEffect(() => {
-    if (deptoSelect?.length > 0){
-      setInputEmployee(true)
-    } else {
-      setInputEmployee(false)
-    }
-  }, [deptoSelect])
 
   return (
   <>
@@ -85,23 +68,18 @@ const InputSalidas = () => {
         </label>
         {
           state.matches('success') &&
-          codigoWatch.length > 6 &&
-          <p 
-            className="input__depto__selected"
-          >{ deptoSelect }
-          </p>
-
+          <p className="input__depto__selected">{ departametSelected }</p>
         }
         { 
 
           <div 
-            hidden={!inputEmployee}
+            hidden={!departametSelected}
           >
           <label>Seleccione un colaborador:
             <input 
               list="employees" 
               name="employees" 
-              {...register('employee')}
+              {...register('employee', { required: true })}
             />
             </label>
           <datalist 
@@ -119,7 +97,7 @@ const InputSalidas = () => {
           employee && 
           <input 
             placeholder="Añadir Destino" 
-            {...register('destino')}
+            {...register('destino', { required: true })}
             />
         }
         <div style={{ marginBottom: '20px' }}></div>

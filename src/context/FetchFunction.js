@@ -11,8 +11,6 @@ const FetchFunction = async ({ url, data, metohd } = {}) => {
       return query
 
     } else if (metohd === 'post') {
-
-      console.log(data)
       
       const mutation = await fetch(BaseStrig + url, {
         method: 'POST',
@@ -25,7 +23,20 @@ const FetchFunction = async ({ url, data, metohd } = {}) => {
         .then(res => res.message)
         .catch(err => console.log(err))
 
-        console.log(mutation, data)
+      return mutation
+
+    } else if (metohd === 'patch') {
+
+      const mutation = await fetch(BaseStrig + url, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(res => res.json())
+        .then(res => res.message)
+        .catch(err => console.log(err))
 
       return mutation
     }

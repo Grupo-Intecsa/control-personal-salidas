@@ -20,8 +20,6 @@
   border-radius: 18px;
   box-shadow: var(--shadow);
   background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
-  font-weight: bold;
-  font-size: large;
   cursor: pointer;
 
 
@@ -77,6 +75,16 @@
   width: 100%;
   text-align: center;
 
+  a{
+    color: var(--black);
+    text-decoration: underline;
+
+    &:hover{
+      opacity: 0.60;
+      cursor: pointer;
+    }
+  }
+
   section{
     display: flex;
     flex-direction: column;
@@ -86,13 +94,11 @@
 
   button{
     font-family: itafont;
-    font-size: large;
     background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);
     border-radius: 4px;  
     color: var(--black);
-    font-weight: bold;
     width: 200px;
-    height: 60px;
+    height: 40px;
     border: none;
     outline: none;
     cursor: pointer;
@@ -111,7 +117,10 @@
 
 #chismoso__container{
   margin-top: 80px;
-  
+  h1{
+    margin-bottom: 10px;
+    font-size: x-large;
+  }
 
   table{
     width: 100vh;
@@ -121,12 +130,6 @@
     thead, tbody{
       width: 100%;
       padding: 0.25rem;
-    }
-
-    thead{
-      background-color: cornflowerblue;
-      color: white;
-      
     }
 
     th{
@@ -139,7 +142,6 @@
 
     th,
     td{
-      font-size: medium;
       padding: 0.25rem;
     }
 

@@ -1,10 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react"
+import DateHook from 'utils/DateHook'
 
 const Chismoso = ({ state, send, chismosData }) => {
 
   const handleRemoveSalida = (employee) => {
-    console.log(employee)
+    send('REMOVE_SALIDA', { data: employee })
   }
 
   useEffect(() => {
@@ -15,6 +16,7 @@ const Chismoso = ({ state, send, chismosData }) => {
 
   return (
     <div id="chismoso__container">
+    <h1>Salidas activas</h1>
       <table>
         <tbody>
           <tr>
@@ -31,7 +33,7 @@ const Chismoso = ({ state, send, chismosData }) => {
                   <tr>
                     <td>{employee.nameEmployee}</td>
                     <td>{employee.destino}</td>
-                    <td>{employee.createdAt}</td>
+                    <td>{<DateHook date={employee.createdAt} />}</td>
                     <td><button onClick={() => handleRemoveSalida(employee)}>Remover</button></td>
                   </tr>
                 )
