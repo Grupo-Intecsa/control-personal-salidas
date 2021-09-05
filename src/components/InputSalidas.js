@@ -47,7 +47,9 @@ const InputSalidas = () => {
   }, [send])
  
   const departametSelected = useMemo(() => {
-    const card = Object
+
+    const card =  listDeptos.length > 0 && 
+    Object
       .values(listDeptos)
       .filter(card => card._id === codigoWatch )
     return  Array.isArray(card) && card[0]?.title
