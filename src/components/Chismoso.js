@@ -26,6 +26,8 @@ const Chismoso = ({ state, send, chismosData }) => {
             <th>Acciones</th>
           </tr>
           { 
+            state.matches('success') &&
+            chismosData.length > 0 &&
             Object
               .values(chismosData)
               .map(employee => {
